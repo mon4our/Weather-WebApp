@@ -53,7 +53,6 @@ def index():
     m = folium.Map(location=[latitude, longitude], zoom_start=10, tiles='Stamen Terrain', attr='Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.')
     folium.Marker(location=[latitude, longitude], popup='User Location', icon=folium.Icon(color='blue')).add_to(m)
 
-    # Save the map to a temporary HTML file
     map_filename = "static/temp_map.html"
     m.save(map_filename)
     
