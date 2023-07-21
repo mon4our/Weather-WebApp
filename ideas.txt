@@ -1,0 +1,1 @@
+->Make the website dynamic i.e. if its raining at the place you have searched for, it shows a raining animation and the website colours are dark grey and blue
