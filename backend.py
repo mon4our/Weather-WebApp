@@ -1,5 +1,11 @@
 from flask import Flask, render_template, request
 import requests
+from geopy.geocoders import Nominatim
+import folium
+import geocoder
+import pandas as pd
+
+geolocator = Nominatim(user_agent="city-to-coordinates")
 
 url="https://api.openweathermap.org/data/2.5/weather?q={}&appid={}"
 
@@ -21,6 +27,15 @@ def get_weather(place):
     else:
         return None
 
+def city_to_coordinates(city):
+    location = geolocator.geocode(city)
+    if location:
+        latitude = location.latitude
+        longitude = location.longitude
+        return latitude, longitude
+    else:
+        return None, None
+
 app = Flask(__name__)
 
 @app.route('/',methods=["GET","POST"])
@@ -28,8 +43,20 @@ def index():
     city="Delhi"
     if request.method=="POST":
         city=request.form["InputCity"]
+        
     weather=get_weather(city)
-    return render_template("index.html",place=weather[0],temp=weather[2],weather=weather[4])
+    
+    latitude, longitude = city_to_coordinates(city)
+    if latitude is None or longitude is None:
+        latitude, longitude = 28.6139, 77.2090
+
+    m = folium.Map(location=[latitude, longitude], zoom_start=10, tiles='Stamen Terrain', attr='Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.')
+    folium.Marker(location=[latitude, longitude], popup='User Location', icon=folium.Icon(color='blue')).add_to(m)
+
+    map_filename = "static/temp_map.html"
+    m.save(map_filename)
+    
+    return render_template("index.html",place=weather[0],temp=weather[2],weather=weather[4], map_filename=map_filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
