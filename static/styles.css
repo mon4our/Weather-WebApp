@@ -8,9 +8,55 @@ body {
     font-size: 25px;
     color: whitesmoke;
     background-color: #87CEEB;
+    padding-top: 80px;
+    padding-bottom: 1000px;
 }
 
 h1{
     font-size: 50px;
+    background-color: black;
+    color: whitesmoke;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
 }
 
+main{
+    display: grid;
+    justify-items: center ;
+}
+
+.map_div{
+    display: grid;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.map{
+    width: 800px;
+    height: 350px;
+    border: none;
+    border-radius: 10px;
+}
+
+.map:hover{
+    box-shadow: 2px 2px 10px 5px whitesmoke;
+}
+
+.weather-info{
+    display: grid;
+    grid-template-rows: 50px 50px 50px;
+    width: 500px;
+    background-color: #F5F5DC;
+    color: black;
+    justify-content: center;
+    border: 5px solid black;
+    padding: auto;
+    border-radius: 10px;
+}
+
+.mb-3-row{
+    width:100%;
+    padding-bottom: 15px;
+}
