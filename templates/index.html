@@ -32,6 +32,18 @@
     <div class="map_div">
       <iframe class="map" src="{{ url_for('static', filename='temp_map.html') }}"></iframe>
     </div>
+    
+    <!-- Display flash error message -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-danger" role="alert">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
   </main>
 </body>
 
