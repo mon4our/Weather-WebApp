@@ -22,7 +22,7 @@ def get_weather(place):
         return final
     return None
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 app.secret_key = 'your_secret_key' #Secret key for flash messages  
 
@@ -40,16 +40,17 @@ def index():
         city = "NA"
         temp = "NA"
         weather_description = "NA"
+        country = "NA"
         latitude, longitude = 28.6139, 77.2090
     else:
-        city, _, temp, _, weather_description, latitude, longitude = weather
+        city, country, temp, _, weather_description, latitude, longitude = weather
 
     m = folium.Map(location=[latitude, longitude], zoom_start=10, tiles='Stamen Terrain',attr='Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.')
 
     map_filename = "static/temp_map.html"
     m.save(map_filename)
 
-    return render_template("index.html", place=city, temp=temp, weather=weather_description, map_filename=map_filename)
+    return render_template("index.html", place=city, temp=temp, weather=weather_description, map_filename=map_filename, country_code=country)
 
 
 if __name__ == '__main__':
